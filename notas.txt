@@ -1,0 +1,152 @@
+
+
+npm i -D @types/node
+
+en vite.config.ts agregamos 
+import {fileURLToPath ,URL} from 'node:url'
+
+resolve:{
+    alias:{
+      '@':fileURLToPath(new URL('./src' , import.meta.url)),
+    }
+  }
+
+en el tsconfig.json
+   "compilerOptions": {
+    ...
+    "baseUrl": "src", //apunta a la carpeta src
+    "paths": {
+       "@/components/*" : ["components/*"] ,
+       "@/views/*" : ["views/*"],
+       "@/layouts/*" : ["layouts/*"],
+    },
+
+
+  instalamos las dependecias de headlessui y heroicos
+    npm i @headlessui/react @heroicons/react
+
+Instalar react hook-form
+npm i react-hook-form
+
+
+instalar zod 
+npm i zod
+
+instalar axios 
+npm i axios
+
+
+instalar la dependecia de react-toastify para enviiar notificaiciones al usuario
+npm i react-toastify
+
+Nesesitamos importar lo siguiente 
+import { ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css'
+
+
+---React Query---
+npm i @tanstack/react-query
+  
+   en el main.tsx
+
+        import React from 'react'
+        import ReactDOM from 'react-dom/client'
+        import { QueryClient , QueryClientProvider } from '@tanstack/react-query'
+        import './index.css'
+        import Router from './router'
+
+
+        const queryClient =new QueryClient()
+
+        ReactDOM.createRoot(document.getElementById('root')!).render(
+          <React.StrictMode>
+
+            <QueryClientProvider client={queryClient}>
+                  <Router/>
+            </QueryClientProvider>
+          
+          
+          </React.StrictMode>
+        )
+
+Usamo queries(useQuery)
+  para obtener datos de un servidor o una API (Get)
+
+usamos Mutations(useMutation)
+  para crear, actualizar, eliminar datos (POST, PUT, PATCH, DELETE)
+
+indatalar para manejar la memoria en cache
+npm i @tanstack/react-query-devtools 
+
+En el main.tsx :
+   import { QueryClient , QueryClientProvider } from '@tanstack/react-query'
+   
+     <QueryClientProvider client={queryClient}>
+          <Router/>
+          <ReactQueryDevtools/>
+    </QueryClientProvider>
+   
+
+En la carpeta de frontend instalamos morgan npm i -D @types/morgan
+
+En el frontend para invalidar querys esto para tener datos frescos por que si no se utilizan datos que estan en cache
+
+  const queryClient = useQueryClient()//para invalidar los querys cuando necesitamos que se actualizen los datos
+
+      const {mutate}= useMutation({
+         mutationFn:updateProject,
+         onError:(error) => {
+           toast.error(error.message)
+         },
+         onSuccess:(data) => {
+            queryClient.invalidateQueries({queryKey:['projects']})//para tener los datos acutualizados 
+            queryClient.invalidateQueries( {queryKey:['editProject', projectId]})
+            toast.success(data)
+            navigate('/')
+         }
+    })
+
+*******funcin par formatear una fech************
+export function fomatDate(isString:string): string{
+    const date= new Date(isString)
+    const fomratter= new Intl.DateTimeFormat('es-Es',{
+        year:'numeric',
+        month:'long',
+        day:'numeric'
+    })
+    return fomratter.format(date)
+}
+
+**********************************************************
+export const statusTask: { [key: string]: string } = {
+    pending: "Pendiente",
+    onHold: "En espera",
+    inProgress: "En Progreso",
+    underReview: "En Revision",
+    completed: "Completado"
+  };
+
+ <select  defaultValue={data.status} className="w-full p-3 bg-white border border-gray-300">
+                        //para iterar un objeto utilizamos Object.entries este convierte el objeto en un arreglo 
+                        // eneste caso un objeto de llave valor 
+                        {Object.entries(statusTask).map(([key, value])=>(
+                            <option key={key} value={key}>{value}</option>
+                        ) )}
+                        
+                      </select>
+
+
+
+******Agregar dependecia para ingresar el pin de confirmar cuentas******
+
+npm i @chakra-ui/pin-input
+
+*** componentes de spiner  
+npm install react-loader-spinner --save
+https://mhnpd.github.io/react-loader-spinner/docs/category/components/
+
+
+********** instalar npm i @tailwindcss/forms para la parte de profile/tabs
+
+
+****para mover tareas  instalar npm i @dnd-kit/core
