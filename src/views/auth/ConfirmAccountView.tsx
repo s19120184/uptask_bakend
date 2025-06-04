@@ -1,6 +1,6 @@
 
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PinInput , PinInputField} from '@chakra-ui/pin-input'
 import { useState } from "react";
 import { ConfirmToken } from "@/types/index";
@@ -8,16 +8,23 @@ import { useMutation } from "@tanstack/react-query";
 import { confirmAccount } from "@/api/AuthAPI";
 import { toast } from "react-toastify";
 
+
 export default function ConfirmAccountView() {
 
   const [token, setToken] = useState<ConfirmToken['token']>('')
+  const  [confimado , setConfirmado] = useState<boolean> ()
+
+  const navigate = useNavigate()
 
   const { mutate } = useMutation({
     mutationFn:confirmAccount,
     onError:(error)=>{
+      setConfirmado(false)
       toast.error(error.message)
     },
     onSuccess:(data)=>{
+      navigate('/auth/login')
+      setConfirmado(true)
       toast.success(data)
     },
   })
@@ -62,6 +69,15 @@ export default function ConfirmAccountView() {
         >
           Solicitar un nuevo Código
         </Link>
+        { confimado && (
+           <Link
+          to='/auth/login'
+          className="text-center text-gray-300 font-normal"
+        >
+          Iniciar Sesión
+        </Link>
+        )}
+
       </nav>
 
     </>
