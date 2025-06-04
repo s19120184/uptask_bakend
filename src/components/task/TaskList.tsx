@@ -53,7 +53,7 @@ export default function TaskList({ tasks, canEdit }: TaskListProps) {
         toast.error(error.message);
       },
       onSuccess: (data) => {
-        console.log(data);
+        (data);
         queryClient.invalidateQueries({ queryKey: ["project", projectId] });
    
         toast.success(data);
