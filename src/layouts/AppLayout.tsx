@@ -21,8 +21,8 @@ export default function AppLayout() {
     <>
         <header className="bg-gray-800 pl-6 ">
 
-            <div className="max-w-screen-2xl mx-auto flex flex-col lg:flex-row justify-between items-center md:p-10">
-                <div className="w-32 ">
+            <div className="max-w-screen-2xl mx-auto flex flex-col lg:flex-row justify-between items-center p-5  md:p-10 ">
+                <div className="w-20 sm:w-32">
                     <Link to="/" >
                            <Logo/>
                     </Link>
