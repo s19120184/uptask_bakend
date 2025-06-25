@@ -73,7 +73,7 @@ export async function resetPassword(user:ForgotPasswordForm){
 export async function validateToken(token: ConfirmToken){
   try {
      const url='auth/validate-token'
-     const {data} = await api.post<string>(url, token)
+     const {data} = await api.post<string>(url, token.token)
      return data
     
   } catch (error) {
