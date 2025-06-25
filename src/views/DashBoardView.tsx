@@ -28,7 +28,7 @@ export default function DashBoardView() {
  
   
   if (isLoading && authLoading) return "Cargando...";
-  console.log(data);
+  
 
   if (data && user)
     return (

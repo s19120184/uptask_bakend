@@ -5,6 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { aunthenticateUser } from "@/api/AuthAPI";
 import { toast } from "react-toastify";
+import SpinnerLoad from "@/components/SpinnerLoad";
+import { useState } from "react";
+
+
 
 export default function LoginView() {
   const initialValues: UserLoginForm = {
@@ -19,17 +23,23 @@ export default function LoginView() {
 
   const navigate = useNavigate();
 
+    const [loading, setLoading] = useState(false);
+    const [color] = useState('#a21caf');
+
   const { mutate } = useMutation({
     mutationFn: aunthenticateUser,
     onError: (error) => {
       toast.error(error.message);
+      setLoading(false)
     },
     onSuccess: () => {
+      setLoading(false)
       navigate("/");
     }
   });
 
   const handleLogin = (formData: UserLoginForm) => {
+    setLoading(true)
     mutate(formData);
   };
 
@@ -87,6 +97,8 @@ export default function LoginView() {
             <ErrorMessage>{errors.password.message}</ErrorMessage>
           )}
         </div>
+
+        <SpinnerLoad loading={loading} color={color} />
 
         <input
           type="submit"
