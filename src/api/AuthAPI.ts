@@ -20,7 +20,7 @@ export async function createAccount(formData: UserRegistrationForm){
 export async function confirmAccount(token: ConfirmToken){
     try {
      const url="/auth/confirm-account"
-     const {data} = await api.post<string>(url, token.token);
+     const {data} = await api.post<string>(url, token);
      return data
      
     } catch (error) {
@@ -73,7 +73,8 @@ export async function resetPassword(user:ForgotPasswordForm){
 export async function validateToken(token: ConfirmToken){
   try {
      const url='auth/validate-token'
-     const {data} = await api.post<string>(url, token.token)
+     console.log(token.token)
+     const {data} = await api.post<string>(url, token)
      return data
     
   } catch (error) {
